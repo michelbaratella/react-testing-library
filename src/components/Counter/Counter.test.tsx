@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import Counter from "./Counter";
+import { act } from "react";
 
 describe.only("Counter", () => {
   test("renders ok", () => {

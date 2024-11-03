@@ -1,23 +1,20 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchUsers();
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data.map((user: { name: string }) => user.name)))
+      .catch(() => setError("error fetching users"));
   });
-
-  const fetchUsers = async () => {
-    const { data } = await axios.get(
-      "https://jsonplaceholder.typicode.com/users"
-    );
-    setUsers(data);
-  };
 
   return (
     <div>
       <h1>Users</h1>
+      {error && <p>{error}</p>}
       <ul>
         {users.map((user) => (
           <li key={user}>{user.name}</li>
